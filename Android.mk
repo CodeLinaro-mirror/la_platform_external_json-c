@@ -1,10 +1,7 @@
-LIBJSON_ROOT := $(call my-dir)
+LOCAL_PATH := $(call my-dir)
+
 include $(CLEAR_VARS)
-LOCAL_MODULE := libjson
-LOCAL_PATH := $(LIBJSON_ROOT)
-LOCAL_CFLAGS := -Werror -Wno-error=unused-parameter
-LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
-LOCAL_ADDITIONAL_DEPENDENCIES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+LOCAL_VENDOR_MODULE := true
 LOCAL_COPY_HEADERS_TO := libjson/inc
 LOCAL_COPY_HEADERS := bits.h \
 		config.h \
@@ -19,18 +16,4 @@ LOCAL_COPY_HEADERS := bits.h \
 		json_tokener.h \
 		json_object_iterator.h \
 		json_c_version.h
-LOCAL_SRC_FILES := arraylist.c \
-		debug.c \
-		json_c_version.c \
-		json_object.c \
-		json_object_iterator.c \
-		json_tokener.c \
-		json_util.c \
-		libjson.c \
-		linkhash.c \
-		printbuf.c \
-		random_seed.c
-LOCAL_SHARED_LIBRARIES := libcutils libutils
-LOCAL_MODULE_TAG := optional
-LOCAL_VENDOR_MODULE := true
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_COPY_HEADERS)
