@@ -8,6 +8,7 @@ LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
 LOCAL_ADDITIONAL_DEPENDENCIES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 endif
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
+ifneq ($(PLATFORM_VERSION),$(filter U 14 UpsideDownCake, $(PLATFORM_VERSION)))
 LOCAL_COPY_HEADERS_TO := libjson/inc
 LOCAL_COPY_HEADERS := bits.h \
 		config.h \
@@ -22,6 +23,7 @@ LOCAL_COPY_HEADERS := bits.h \
 		json_tokener.h \
 		json_object_iterator.h \
 		json_c_version.h
+endif
 LOCAL_SRC_FILES := arraylist.c \
 		debug.c \
 		json_c_version.c \
@@ -37,3 +39,11 @@ LOCAL_SHARED_LIBRARIES := libcutils libutils
 LOCAL_MODULE_TAG := optional
 LOCAL_VENDOR_MODULE := true
 include $(BUILD_SHARED_LIBRARY)
+
+ifeq ($(PLATFORM_VERSION),$(filter U 14 UpsideDownCake, $(PLATFORM_VERSION)))
+include $(CLEAR_VARS)
+LOCAL_MODULE := libjson_headers
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
+LOCAL_VENDOR_MODULE := true
+include $(BUILD_HEADER_LIBRARY)
+endif
